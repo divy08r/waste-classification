@@ -3,4 +3,5 @@ werkzeug
 gevent
 flask
 tensorflow
+pillow
 gunicorn
