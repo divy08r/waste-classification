@@ -3,4 +3,4 @@ werkzeug
 gevent
 flask
 tensorflow
-gunicornx
+gunicorn
