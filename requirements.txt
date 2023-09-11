@@ -1,0 +1,6 @@
+numpy
+werkzeug
+gevent
+flask
+tensorflow
+gunicornx
