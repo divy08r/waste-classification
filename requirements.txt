@@ -2,6 +2,7 @@ numpy
 werkzeug
 gevent
 flask
+keras
 tensorflow
 pillow
 gunicorn
