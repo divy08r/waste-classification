@@ -4,7 +4,7 @@ import sys
 import os
 import glob
 import re
-import numpy as np
+import numpy as np  
 
 from keras.applications.imagenet_utils import preprocess_input, decode_predictions
 from keras.models import load_model
@@ -16,25 +16,11 @@ from gevent.pywsgi import WSGIServer
 
 app = Flask(__name__)
 
-MODEL_PATH = 'network1.h5'
+MODEL_PATH = 'network2.h5'
 
 model = load_model(MODEL_PATH)
-# model._make_predict_function()          
 
 print('Model loaded. Check http://127.0.0.1:5000/')
-
-
-# def model_predict(img_path, model):
-#     img = image.load_img(img_path, target_size=(224, 224))
-
-#     x = image.img_to_array(img)
-
-#     x = np.expand_dims(x, axis=0)
-
-#     x = preprocess_input(x, mode='caffe')
-
-#     preds = model.predict(x)
-#     return preds
 
 from tensorflow.keras.preprocessing import image
 output_class = ["battery", "biological", "brown-glass", "cardboard", "clothes", "green-glass", "metal", "paper", "plastic","shoes","trash","white-glass"]
@@ -49,12 +35,11 @@ def model_predict(new_image):
   predicted_accuracy = round(np.max(predicted_array) * 100, 2)
 
   print("Your waste material is ", predicted_value, " with ", predicted_accuracy, " % accuracy")
-  return predicted_value
+  return predicted_value, predicted_accuracy
 
 
 @app.route('/', methods=['GET'])
 def index():
-    # Main page
     return render_template('index.html')
 
 
@@ -69,12 +54,13 @@ def upload():
         f.save(file_path)
 
 
-        preds = model_predict(file_path)
-
-        result = preds
+        preds, preds_accu = model_predict(file_path)
+        res_str = "Your waste material is "+ str(preds)+ " with "+ str(preds_accu) + " % accuracy"
+        result = [res_str]
+        # result = preds
+        os.remove(file_path)
         return result
     return None
-
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
