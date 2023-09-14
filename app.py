@@ -16,7 +16,7 @@ from gevent.pywsgi import WSGIServer
 
 app = Flask(__name__)
 
-MODEL_PATH = 'network2.h5'
+MODEL_PATH = 'network1.h5'
 
 model = load_model(MODEL_PATH)
 
