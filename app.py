@@ -20,7 +20,7 @@ MODEL_PATH = 'network1.h5'
 
 model = load_model(MODEL_PATH)
 
-print('Model loaded. Check http://127.0.0.1:5000/')
+# print('Model loaded. Check http://127.0.0.1:5000/')
 
 
 
@@ -36,7 +36,7 @@ def model_predict(new_image):
   predicted_value = output_class[np.argmax(predicted_array)]
   predicted_accuracy = round(np.max(predicted_array) * 100, 2)
 
-  print("Your waste material is ", predicted_value, " with ", predicted_accuracy, " % accuracy")
+  # print("Your waste material is ", predicted_value, " with ", predicted_accuracy, " % accuracy")
   return predicted_value, predicted_accuracy
 
 
