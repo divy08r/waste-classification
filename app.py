@@ -16,11 +16,12 @@ from gevent.pywsgi import WSGIServer
 
 app = Flask(__name__)
 
-MODEL_PATH = 'network1.h5'
+MODEL_PATH = 'network2.h5'
 
 model = load_model(MODEL_PATH)
 
 print('Model loaded. Check http://127.0.0.1:5000/')
+
 
 from tensorflow.keras.preprocessing import image
 output_class = ["battery", "biological", "brown-glass", "cardboard", "clothes", "green-glass", "metal", "paper", "plastic","shoes","trash","white-glass"]
@@ -38,12 +39,7 @@ def model_predict(new_image):
   return predicted_value, predicted_accuracy
 
 
-@app.route('/', methods=['GET'])
-def index():
-    return render_template('index.html')
-
-
-@app.route('/predict', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
         f = request.files['file']
@@ -60,7 +56,8 @@ def upload():
         # result = preds
         os.remove(file_path)
         return result
-    return None
+    return render_template('index.html')
 
-if __name__ == '__main__':
-    app.run(port=3000, debug=True)
+
+# if __name__ == '__main__':
+#     app.run(port=3000)
